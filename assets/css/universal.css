@@ -1,10 +1,9 @@
-/* Wonder World CRM — universal.css (Light “Borex-style”)
-   One file to flip the app to a bright, minimal, detailed look.
-   Keep the same HTML. Uses CSS Layers for safe overrides. */
+/* Wonder World CRM — universal.css (Light “Borex-style” + compact sidebar)
+   Sidebar narrower, text/icons navy for stronger contrast. */
 
 @layer reset, tokens, base, components, utilities, overrides;
 
-/* ========== RESET ========== */
+/* ===== RESET ===== */
 @layer reset{
   *,*::before,*::after{ box-sizing:border-box }
   html,body{ height:100% }
@@ -13,37 +12,33 @@
   input,button,textarea,select{ font:inherit }
 }
 
-/* ========== TOKENS (LIGHT THEME) ========== */
+/* ===== TOKENS ===== */
 @layer tokens{
   :root{
-    /* Core palette */
-    --ww-bg:            #f5f7fb;     /* page background */
-    --ww-surface:       #ffffff;     /* cards, header */
-    --ww-ink:           #1f2a37;     /* main text (slate-800) */
-    --ww-sub:           #6b7280;     /* secondary text (slate-500/600) */
-    --ww-border:        #e8edf3;     /* light borders */
-    --ww-primary:       #3b82f6;     /* blue 500 */
-    --ww-primary-600:   #2563eb;     /* blue 600 */
-    --ww-primary-100:   #eaf2ff;     /* soft blue bg */
+    --ww-bg:            #f5f7fb;
+    --ww-surface:       #ffffff;
+    --ww-ink:           #1f2a37;      /* main text */
+    --ww-sub:           #374151;      /* darker navy-ish secondary */
+    --ww-border:        #e8edf3;
+    --ww-primary:       #3b82f6;
+    --ww-primary-600:   #2563eb;
+    --ww-primary-100:   #eaf2ff;
     --ww-success:       #16a34a;
     --ww-danger:        #ef4444;
     --ww-warning:       #f59e0b;
 
-    /* Sidebar (dark navy) */
+    /* Sidebar navy */
     --ww-side-bg:       #0b1220;
-    --ww-side-ink:      #e7ecf5;
-    --ww-side-sub:      #9aa4b2;
+    --ww-side-ink:      #1e3a8a;      /* deep navy text/icons */
     --ww-side-hover:    rgba(255,255,255,.06);
     --ww-side-active:   rgba(59,130,246,.14);
 
-    /* Surfaces & effects */
     --ww-shadow:        0 10px 30px rgba(2,6,23,.06);
     --ww-radius-xl:     18px;
     --ww-radius-lg:     14px;
     --ww-radius-md:     12px;
     --ww-radius-sm:     10px;
 
-    /* Type scale (light, compact) */
     --ww-h1: clamp(1.45rem, 1.6vw + .9rem, 1.9rem);
     --ww-h2: clamp(1.15rem, 1.2vw + .85rem, 1.35rem);
     --ww-h3: 1.05rem;
@@ -55,7 +50,7 @@
   }
 }
 
-/* ========== BASE ========== */
+/* ===== BASE ===== */
 @layer base{
   body{
     background: var(--ww-bg);
@@ -69,23 +64,22 @@
   a:hover{ color: var(--ww-primary-600) }
 }
 
-/* ========== COMPONENTS ========== */
+/* ===== COMPONENTS ===== */
 @layer components{
-  /* Topbar = white surface, hairline border, very soft shadow */
+  /* Topbar */
   .ww-topbar{
     background: var(--ww-surface);
     border-bottom: 1px solid var(--ww-border);
     box-shadow: var(--ww-shadow);
-    backdrop-filter: none;
   }
   .ww-logo{
     width:34px; height:34px; border-radius:10px;
     background: radial-gradient(40% 50% at 30% 30%, #90c5ff 0%, #3b82f6 55%, #2563eb 100%);
   }
 
-  /* Sidebar = dark navy rail with subtle hover/active */
+  /* Sidebar */
   .ww-sidebar{
-    width:280px;
+    width:220px; /* narrower */
     background: var(--ww-side-bg);
     color: var(--ww-side-ink);
     border-right: 0;
@@ -93,22 +87,26 @@
   }
   .ww-sidebar .nav-link{
     color: var(--ww-side-ink);
-    border-radius: 12px;
-    padding: .55rem .7rem;
+    border-radius: 10px;
+    padding: .5rem .65rem;
     border: 1px solid transparent;
+    font-weight: 600;
     transition: background var(--ww-fast) var(--ww-ease), border-color var(--ww-fast) var(--ww-ease), color var(--ww-fast) var(--ww-ease);
   }
-  .ww-sidebar .nav-link:hover{ background: var(--ww-side-hover); color: #fff }
+  .ww-sidebar .nav-link i{
+    color: var(--ww-side-ink);
+  }
+  .ww-sidebar .nav-link:hover{
+    background: var(--ww-side-hover);
+    color: var(--ww-primary-100);
+  }
   .ww-sidebar .nav-link.active{
     background: var(--ww-side-active);
     border-color: rgba(59,130,246,.3);
-    color: #fff;
+    color: var(--ww-primary-100);
   }
 
-  /* Content area */
-  .ww-content{ min-height:100vh; background: var(--ww-bg) }
-
-  /* Cards = white, rounded, thin border + soft shadow */
+  /* Cards */
   .card.ww-glass{
     background: var(--ww-surface);
     color: var(--ww-ink);
@@ -117,95 +115,52 @@
     box-shadow: var(--ww-shadow);
   }
 
-  /* KPI “pills” look (optional, applies to .card in KPI row) */
-  .card.ww-glass .text-sub{ color: var(--ww-sub) }
-
   /* Buttons */
   .btn-ww{
     font-weight:700;
     color:#fff;
     background: linear-gradient(90deg, var(--ww-primary), #60a5fa 120%);
     border: 0;
-    border-radius: 12px;
-    padding: .55rem .9rem;
+    border-radius: 10px;
+    padding: .5rem .85rem;
     box-shadow: 0 8px 22px rgba(59,130,246,.18);
-    transition: transform var(--ww-fast) var(--ww-ease), box-shadow var(--ww-fast) var(--ww-ease);
   }
-  .btn-ww:hover{ transform: translateY(-1px); box-shadow: 0 10px 26px rgba(59,130,246,.24) }
   .btn-outline-ww{
     border:1px solid var(--ww-border);
     color: var(--ww-ink);
     background: #fff;
-    border-radius: 12px;
+    border-radius: 10px;
   }
-  .btn-outline-ww:hover{ background: var(--ww-primary-100); border-color: #dbe7ff; color: var(--ww-primary-600) }
 
   /* Forms */
   .form-control,.form-select{
     background:#fff;
     color:var(--ww-ink);
     border:1px solid var(--ww-border);
-    border-radius: 10px;
-    padding:.55rem .7rem;
-    box-shadow: none;
+    border-radius: 8px;
+    padding:.5rem .65rem;
   }
-  .form-control::placeholder{ color:#9aa4b2 }
   .form-control:focus,.form-select:focus{
-    border-color: color-mix(in oklab, var(--ww-primary) 45%, white);
+    border-color: var(--ww-primary);
     outline: 0;
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--ww-primary) 18%, transparent);
+    box-shadow: 0 0 0 3px rgba(59,130,246,.18);
   }
 
-  /* Tables (clean lines, subtle hover) */
-  .table{ color: var(--ww-ink); background: transparent }
-  .table thead th{ color:#4b5563; font-weight:600; border-bottom:1px solid var(--ww-border) }
-  .table > :not(caption) > * > *{ padding:.6rem .75rem; border-bottom:1px solid var(--ww-border) }
+  /* Tables */
+  .table thead th{ color:var(--ww-sub); font-weight:600; border-bottom:1px solid var(--ww-border) }
+  .table > :not(caption) > * > *{ padding:.55rem .7rem; border-bottom:1px solid var(--ww-border) }
   .table tbody tr:hover{ background:#f6f9ff }
-
-  /* Progress bars (thin, blue) */
-  .progress{ height:.6rem; background:#eef2f7; border-radius:999px }
-  .progress-bar{ background: linear-gradient(90deg, var(--ww-primary), #60a5fa) }
-
-  /* “Soft” badges (success/warn/danger) */
-  .badge-soft{ padding:.35rem .5rem; border-radius: 999px; font-weight:600 }
-  .badge-soft.success{ background:#eaf9f0; color:var(--ww-success) }
-  .badge-soft.warn{ background:#fff4e5; color:var(--ww-warning) }
-  .badge-soft.danger{ background:#ffecec; color:var(--ww-danger) }
 }
 
-/* ========== UTILITIES ========== */
+/* ===== UTILITIES ===== */
 @layer utilities{
   .text-sub{ color: var(--ww-sub) !important }
   .border-ww{ border-color: var(--ww-border) !important }
   .bg-card{ background: var(--ww-surface) !important }
-  .rounded-lg{ border-radius: var(--ww-radius-lg) !important }
-  .rounded-md{ border-radius: var(--ww-radius-md) !important }
-  .shadow-ww{ box-shadow: var(--ww-shadow) !important }
-
-  /* Responsive gutters (a tad tighter) */
-  @media (max-width: 992px){ .row.g-3{ --bs-gutter-x:.9rem; --bs-gutter-y:.9rem } }
-  @media (max-width: 576px){ .row.g-3{ --bs-gutter-x:.75rem; --bs-gutter-y:.75rem } }
-
-  /* Gentle appear animation (optional) */
-  .fade-in{ animation: fadeIn var(--ww-slow) var(--ww-ease) both }
-  @keyframes fadeIn{ from{ opacity:0; transform:translateY(6px) } to{ opacity:1; transform:none } }
 }
 
-/* ========== OVERRIDES (fine-tuning + third-party) ========== */
+/* ===== OVERRIDES ===== */
 @layer overrides{
-  /* Normalize headings inside cards */
-  .card h5{ margin-bottom:.35rem; color: var(--ww-ink); font-weight:700 }
-
-  /* Sidebar icons/text tone */
-  .ww-sidebar i{ color: var(--ww-side-sub) }
-
-  /* ApexCharts (force light labels/axes without touching JS) */
-  .apexcharts-tooltip,.apexcharts-menu{ color:#111; }
-  .apexcharts-legend-text,
-  .apexcharts-xaxis text,
-  .apexcharts-yaxis text { fill: #6b7280 !important; }
-  .apexcharts-title-text{ fill: #1f2a37 !important; }
-
-  /* Kill leftover dark/glass styles from older CSS, if any */
-  .ww-topbar,[class*="ww-glass"]{ backdrop-filter:none }
+  .card h5{ margin-bottom:.35rem; font-weight:700; color: var(--ww-ink) }
+  .ww-sidebar{ min-width:220px; max-width:220px }
 }
